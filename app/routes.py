@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 import requests
 
 BASE_URL = "https://results.bput.ac.in"
@@ -86,3 +86,6 @@ def register_routes(app):
         }
         url = f"{BASE_URL}/student-results-sgpa"
         return make_request(url, params, method='POST')
+    @app.route('/')
+    def home():
+        return render_template('index.html')
