@@ -1,3 +1,10 @@
-gunicorn
-flask
+blinker
+click
+Flask
+itsdangerous
+Jinja2
+MarkupSafe
 requests
+Werkzeug
+gunicorn
+pymongo
