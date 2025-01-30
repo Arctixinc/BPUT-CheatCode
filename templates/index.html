@@ -3,156 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPUT Results API</title>
+    <title>BPUT Results API Documentation</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background: linear-gradient(to right, #00d2ff, #3a7bd5);
-            overflow: hidden;
+            color: #333;
+            line-height: 1.6;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 600px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            text-align: center;
-            animation: fadeIn 1s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
             color: #007bff;
+            text-align: center;
             font-size: 36px;
             margin-bottom: 20px;
-            animation: scaleIn 0.5s ease forwards;
         }
 
-        @keyframes scaleIn {
-            0% {
-                transform: scale(0.8);
-            }
-            100% {
-                transform: scale(1);
-            }
+        h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
         }
 
         p {
-            color: #333;
-            font-size: 18px;
-            line-height: 1.6;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .endpoint {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
+            border-left: 4px solid #007bff;
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        li {
-            margin: 0 10px;
-            transition: transform 0.3s ease;
-        }
-
-        li:hover {
-            transform: translateY(-5px);
-        }
-
-        li::before {
-            content: "\2022";
+        .endpoint h3 {
+            margin: 0;
+            font-size: 20px;
             color: #007bff;
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-            margin-right: 10px;
         }
 
-        li a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: bold;
+        .endpoint p {
+            margin: 10px 0;
         }
 
-        li a:hover {
-            color: #0056b3;
-            text-decoration: underline;
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .method {
+            color: #569cd6;
+        }
+
+        .code-block .url {
+            color: #ce9178;
         }
 
         .note {
-            color: #999;
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 0;
             font-size: 14px;
-            margin-top: 20px;
+            color: #0056b3;
         }
 
-        .pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+        .note strong {
+            color: #007bff;
         }
 
-        .pattern::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%23f8f9fa" fill-opacity="1" d="M0,224L120,208C240,192,480,160,720,138.7C960,117,1200,107,1320,101.3L1440,96L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"%3E%3C/path%3E%3C/svg%3E');
-            background-repeat: repeat-x;
-            animation: animatePattern 20s linear infinite;
-        }
-
-        @keyframes animatePattern {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to BPUT Results API</h1>
-        <p>Here are the available routes:</p>
-        <ul>
-            <li><a href="/details?rollno=<rollno>">/details?rollno=&lt;rollno&gt;</a></li>
-            <li><a href="/results?rollno=<rollno>&semid=<semid>&session=<session>">/results?rollno=&lt;rollno&gt;&amp;semid=&lt;semid&gt;&amp;session=&lt;session&gt;</a></li>
-            <li><a href="/examinfo?rollno=<rollno>&dob=<dob>&session=<session>">/examinfo?rollno=&lt;rollno&gt;&amp;dob=&lt;dob&gt;&amp;session=&lt;session&gt;</a></li>
-            <li><a href="/sgpa?rollno=<rollno>&semid=<semid>&session=<session>">/sgpa?rollno=&lt;rollno&gt;&amp;semid=&lt;semid&gt;&amp;session=&lt;session&gt;</a></li>
-        </ul>
-        <p class="note">Note: Replace &lt;rollno&gt;, &lt;semid&gt;, &lt;session&gt;, and &lt;dob&gt; with appropriate values.</p>
+        <h1>BPUT Results API Documentation</h1>
+        <p>Welcome to the BPUT Results API! This API provides access to student results, details, and SGPA information from BPUT (Biju Patnaik University of Technology). Below are the available endpoints and how to use them.</p>
+
+        <div class="note">
+            <strong>Note:</strong> Replace placeholders like <code>&lt;rollno&gt;</code>, <code>&lt;semid&gt;</code>, <code>&lt;session&gt;</code>, and <code>&lt;dob&gt;</code> with actual values.
+        </div>
+
+        <!-- Student Details Endpoint -->
+        <div class="endpoint">
+            <h3>1. Student Details</h3>
+            <p>Fetch student details using their roll number.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/details?rollno=&lt;rollno&gt;</span>
+            </div>
+            <p><strong>Example Request:</strong></p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/details?rollno=1234567890</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                {
+                    "studentName": "John Doe",
+                    "rollNo": "1234567890",
+                    "program": "B.Tech in Computer Science",
+                    "college": "Some College"
+                }
+            </div>
+        </div>
+
+        <!-- Student Results Endpoint -->
+        <div class="endpoint">
+            <h3>2. Student Results</h3>
+            <p>Fetch subject-wise results for a student.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/results?rollno=&lt;rollno&gt;&amp;semid=&lt;semid&gt;&amp;session=&lt;session&gt;</span>
+            </div>
+            <p><strong>Example Request:</strong></p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/results?rollno=1234567890&amp;semid=4&amp;session=E24</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                [
+                    {
+                        "subjectCODE": "CS101",
+                        "subjectName": "Introduction to Computer Science",
+                        "subjectCredits": "4",
+                        "grade": "A"
+                    },
+                    {
+                        "subjectCODE": "MA101",
+                        "subjectName": "Mathematics I",
+                        "subjectCredits": "3",
+                        "grade": "B"
+                    }
+                ]
+            </div>
+        </div>
+
+        <!-- Exam Information Endpoint -->
+        <div class="endpoint">
+            <h3>3. Exam Information</h3>
+            <p>Fetch exam-related information for a student.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/examinfo?rollno=&lt;rollno&gt;&amp;dob=&lt;dob&gt;&amp;session=&lt;session&gt;</span>
+            </div>
+            <p><strong>Example Request:</strong></p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/examinfo?rollno=1234567890&amp;dob=2000-01-01&amp;session=E24</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                {
+                    "examName": "End Semester Examination",
+                    "examDate": "2023-12-15",
+                    "status": "Completed"
+                }
+            </div>
+        </div>
+
+        <!-- SGPA Details Endpoint -->
+        <div class="endpoint">
+            <h3>4. SGPA Details</h3>
+            <p>Fetch the SGPA (Semester Grade Point Average) for a student.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/sgpa?rollno=&lt;rollno&gt;&amp;semid=&lt;semid&gt;&amp;session=&lt;session&gt;</span>
+            </div>
+            <p><strong>Example Request:</strong></p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/sgpa?rollno=1234567890&amp;semid=4&amp;session=E24</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                {
+                    "sgpa": "9.2"
+                }
+            </div>
+        </div>
+
+        <!-- All Sessions Endpoint -->
+        <div class="endpoint">
+            <h3>5. All Sessions</h3>
+            <p>Fetch a list of all available exam sessions.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/allsession</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                [
+                    { "name": "Odd-(2024-25)", "shortCode": "O25" },
+                    { "name": "Supplementary 2023-24", "shortCode": "S24" },
+                    { "name": "Even-(2023-24)", "shortCode": "E24" }
+                ]
+            </div>
+        </div>
+
+        <!-- Combined Data Endpoint -->
+        <div class="endpoint">
+            <h3>6. Combined Data</h3>
+            <p>Fetch student details, subject results, and SGPA in a single request.</p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/combined?rollno=&lt;rollno&gt;&amp;semid=&lt;semid&gt;&amp;session=&lt;session&gt;</span>
+            </div>
+            <p><strong>Example Request:</strong></p>
+            <div class="code-block">
+                <span class="method">GET</span> <span class="url">/combined?rollno=1234567890&amp;semid=4&amp;session=E24</span>
+            </div>
+            <p><strong>Example Response:</strong></p>
+            <div class="code-block">
+                {
+                    "studentDetails": {
+                        "studentName": "John Doe",
+                        "rollNo": "1234567890",
+                        "program": "B.Tech in Computer Science",
+                        "college": "Some College"
+                    },
+                    "subjectResults": [
+                        {
+                            "subjectCODE": "CS101",
+                            "subjectName": "Introduction to Computer Science",
+                            "subjectCredits": "4",
+                            "grade": "A"
+                        },
+                        {
+                            "subjectCODE": "MA101",
+                            "subjectName": "Mathematics I",
+                            "subjectCredits": "3",
+                            "grade": "B"
+                        }
+                    ],
+                    "sgpaDetails": {
+                        "sgpa": "9.2"
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="footer">
+            &copy; 2025 BPUT Results API. All rights reserved.
+        </div>
     </div>
-    <div class="pattern"></div>
 </body>
 </html>
